@@ -7,6 +7,7 @@ import java.util.Properties;
 public class ConfigurationManager
 {
     public String filesDir;
+    public String cassandraIp;
 
     private static ConfigurationManager instance = null;
 
@@ -54,6 +55,7 @@ public class ConfigurationManager
 
             // set properties values
             filesDir = prop.getProperty("files_dir");
+            cassandraIp = prop.getProperty("cassandra_ip");
 
             fis.close();
             System.out.println("loaded " + propFileName);

@@ -2,16 +2,16 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import config.ConfigurationManager;
 import org.apache.commons.io.FileUtils;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class XdrLocEngine {
     private File mDoneFolder;
@@ -93,7 +93,7 @@ public class XdrLocEngine {
                         .body("{\"token\": \"95c59fe063cbaa\",\"radio\": \"gsm\",\"mcc\": " + drs[4] + ",\"mnc\": " + drs[5] + ",\"cells\": [{\"lac\": " + drs[3] + ",\"cid\": " + drs[2] + "}],\"address\": 1}")
                         .asString();
                 System.out.println(response.getBody().toString());
-                result = insertDB(response.getBody());
+                result = insertDB(response.getBody(), drs);
             } catch (Exception e) {
                 e.printStackTrace();
                 result = false;
@@ -103,11 +103,33 @@ public class XdrLocEngine {
         return result;
     }
 
-    private boolean insertDB(String response) {
+    private boolean insertDB(String response, String[] data) throws SQLException {
         boolean result = true;
+        JSONObject jsonObj = new JSONObject(response);
+        Connection con = DriverManager.getConnection("jdbc:cassandra://"+ConfigurationManager.getInstance().cassandraIp+":9160/loc");
+        PreparedStatement queryStatement = con.prepareStatement(
+                    "INSERT INTO loc.xdr_cellid_locations(" +
+                            "visit_time, " +
+                            "cell_id," +
+                            " imei," +
+                            " imsi," +
+                            " msisdn," +
+                            " latitude," +
+                            " longitude," +
+                            " mnc," +
+                            " mcc " +
+                            ") VALUES (?,?,?,?,?,?,?,?,?)");
+        queryStatement.setLong(1, 0);
+        queryStatement.setLong(2,Integer.parseInt(data[2]));
+        queryStatement.setLong(3, 123123);
+        queryStatement.setLong(4, 123123);
+        queryStatement.setLong(5, 123123);
+        queryStatement.setFloat(6, Float.parseFloat(jsonObj.get("lat").toString()));
+        queryStatement.setFloat(7, Float.parseFloat(jsonObj.get("lon").toString()));
+        queryStatement.setLong(8, Integer.parseInt(data[4]));
+        queryStatement.setLong(9, Integer.parseInt(data[5]));
 
-
-
+        queryStatement.execute();
         return result;
     }
 
