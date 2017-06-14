@@ -23,7 +23,8 @@ public class XdrLocEngine {
 
     private void run() throws IOException {
         File folder = new File(ConfigurationManager.getInstance().filesDir);
-        mDoneFolder = new File(ConfigurationManager.getInstance().filesDir + "done");
+        String doneDirPath = ConfigurationManager.getInstance().filesDir + "done\\";
+        mDoneFolder = new File(doneDirPath);
 
         if (!mDoneFolder.exists()) {
             if (mDoneFolder.mkdir()) {
@@ -111,6 +112,7 @@ public class XdrLocEngine {
                     "INSERT INTO loc.xdr_cellid_locations(" +
                             "visit_time, " +
                             "cell_id," +
+                            "msisdn," +
                             " imei," +
                             " imsi," +
                             " msisdn," +
@@ -118,16 +120,17 @@ public class XdrLocEngine {
                             " longitude," +
                             " mnc," +
                             " mcc " +
-                            ") VALUES (?,?,?,?,?,?,?,?,?)");
+                            ") VALUES (?,?,?,?,?,?,?,?,?,?)");
         queryStatement.setLong(1, 0);
         queryStatement.setLong(2,Integer.parseInt(data[2]));
         queryStatement.setLong(3, 123123);
-        queryStatement.setLong(4, 123123);
+        queryStatement.setLong(4, 2525656);
         queryStatement.setLong(5, 123123);
-        queryStatement.setFloat(6, Float.parseFloat(jsonObj.get("lat").toString()));
-        queryStatement.setFloat(7, Float.parseFloat(jsonObj.get("lon").toString()));
-        queryStatement.setLong(8, Integer.parseInt(data[4]));
-        queryStatement.setLong(9, Integer.parseInt(data[5]));
+        queryStatement.setLong(6, 123123);
+        queryStatement.setFloat(7, Float.parseFloat(jsonObj.get("lat").toString()));
+        queryStatement.setFloat(8, Float.parseFloat(jsonObj.get("lon").toString()));
+        queryStatement.setLong(9, Integer.parseInt(data[4]));
+        queryStatement.setLong(10, Integer.parseInt(data[5]));
 
         queryStatement.execute();
         return result;
