@@ -1,23 +1,24 @@
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import config.ConfigurationManager;
+import datamodule.Location;
+import de.micromata.opengis.kml.v_2_2_0.Document;
+import de.micromata.opengis.kml.v_2_2_0.Kml;
 import javafx.util.Pair;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class XdrLocEngine {
     private File mDoneFolder;
-    private HashMap mLocationHash = new HashMap();
+    private ArrayList<Location> mLocationsHash = new ArrayList();
 
     public static void main(String[] args) throws IOException {
         XdrLocEngine xdrLocEngine = new XdrLocEngine();
@@ -30,17 +31,17 @@ public class XdrLocEngine {
         mDoneFolder = new File(doneDirPath);
 
         if (!mDoneFolder.exists()) {
-            if (mDoneFolder.mkdir()) {
-                System.out.println("Directory is created!");
-            } else {
-                System.out.println("Failed to create directory!");
-            }
+//            if (mDoneFolder.mkdir()) {
+//                System.out.println("Directory is created!");
+//            } else {
+//                System.out.println("Failed to create directory!");
+//            }
         }
 
         while (true) {
             File[] listOfFiles = folder.listFiles();
             for (File item : listOfFiles) {
-                if (!item.isDirectory()) {
+                if (!item.isDirectory() && item.getName().contains("xdr")) {
                     readLocationsFile(item);
                     File dest = new File(folder.getPath() + item.getName());
                     FileUtils.copyDirectory(item, dest);
@@ -69,6 +70,10 @@ public class XdrLocEngine {
                 stringBuilder.append(sCurrentLine);
             }
             getCellIdFromFileData(stringBuilder.toString());
+            if(mLocationsHash.size() > 0)
+            {
+                exportToKMLfile();
+            }
         } catch (Exception e) {
             result = false;
             e.printStackTrace();
@@ -97,7 +102,10 @@ public class XdrLocEngine {
                         .body("{\"token\": \"95c59fe063cbaa\",\"radio\": \"gsm\",\"mcc\": " + drs[3] + ",\"mnc\": " + drs[4] + ",\"cells\": [{\"lac\": " + drs[2] + ",\"cid\": " + drs[1] + "}],\"address\": 1}")
                         .asString();
                 System.out.println(response.getBody().toString());
-                result = insertDB(response.getBody(), drs);
+                JSONObject jsonObj = new JSONObject(response.getBody().toString());
+                Location location = new Location(drs[0], jsonObj.get("lon").toString(), jsonObj.get("lat").toString(), jsonObj.get("address").toString(), drs[1], drs[7]);
+                mLocationsHash.add(location);
+//                result = insertDB(response.getBody(), drs);
             } catch (Exception e) {
                 e.printStackTrace();
                 result = false;
@@ -137,6 +145,24 @@ public class XdrLocEngine {
 
         queryStatement.execute();
         return result;
+    }
+
+    private void exportToKMLfile(){
+        Kml kml = new Kml();
+
+        Document document = kml.createAndSetDocument().withName("MyMarkers");
+
+        for (Location item : mLocationsHash) {
+            document.createAndAddPlacemark()
+                    .withName(item.CellId +"--"+item.Msisdn+"--"+item.Address).withOpen(Boolean.TRUE)
+                    .createAndSetPoint().addToCoordinates(Double.parseDouble(item.longtitude),Double.parseDouble(item.Latitude));
+        }
+
+        try {
+            kml.marshal(new File(ConfigurationManager.getInstance().filesDir+"HelloKml.kml"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }
