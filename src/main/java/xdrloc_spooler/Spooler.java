@@ -21,14 +21,18 @@ public class Spooler {
 
     public void execute() {
         File folder = new File(ConfigurationManager.getInstance().locationsFilesDir + ConfigurationManager.getInstance().filesFolderName);
-        File[] listOfFiles = folder.listFiles();
+        System.out.println("Spooler Starting ........ "+ConfigurationManager.getInstance().locationsFilesDir + ConfigurationManager.getInstance().filesFolderName);
 
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                System.out.println("File Found ::::::::" + listOfFiles[i].getName());
-                readLocationsFile(listOfFiles[i].getPath());
-                send();
-                moveFile(listOfFiles[i].getPath());
+        while (true) {
+            File[] listOfFiles = folder.listFiles();
+
+            for (int i = 0; i < listOfFiles.length; i++) {
+                if (listOfFiles[i].isFile()) {
+                    System.out.println("File Found ::::::::" + listOfFiles[i].getName());
+                    readLocationsFile(listOfFiles[i].getPath());
+                    send();
+                    moveFile(listOfFiles[i].getPath());
+                }
             }
         }
     }
