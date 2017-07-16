@@ -6,8 +6,11 @@ import java.util.Properties;
 //Singleton class
 public class ConfigurationManager
 {
-    public String filesDir;
+    public String locationsFilesDir;
+    public String filesFolderName;
+    public String doneFolderName;
     public String cassandraIp;
+    public  String kafkaHost;
 
     private static ConfigurationManager instance = null;
 
@@ -54,8 +57,12 @@ public class ConfigurationManager
             }
 
             // set properties values
-            filesDir = prop.getProperty("files_dir");
+            locationsFilesDir = prop.getProperty("locations_files_dir");
             cassandraIp = prop.getProperty("cassandra_ip");
+            filesFolderName = prop.getProperty("files_folder_name");
+            doneFolderName = prop.getProperty("done_folder_name");
+            kafkaHost = prop.getProperty("kafka_host");
+
 
             fis.close();
             System.out.println("loaded " + propFileName);

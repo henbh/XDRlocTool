@@ -35,6 +35,15 @@
     <orderEntry type="library" name="Maven: org.apache.cassandra:cassandra-thrift:1.2.5" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.thrift:libthrift:0.7.0" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: kafkaInterface:kafkaInterface:LATEST">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/KafkaGenericStream-1.0-SNAPSHOT-jar-with-dependencies.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.6.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.6.0" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.6.3" level="project" />

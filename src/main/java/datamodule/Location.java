@@ -1,19 +1,33 @@
 package datamodule;
 
-public class Location {
-    public String time;
-    public String longtitude;
-    public String Latitude;
-    public String Address;
-    public String CellId;
-    public String Msisdn;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    public Location(String time, String longtitude, String latitude, String address, String cellId, String msisdn) {
-        this.time = time;
-        this.longtitude = longtitude;
-        Latitude = latitude;
-        Address = address;
-        CellId = cellId;
-        Msisdn = msisdn;
+public class Location {
+    @JsonProperty("cell_id")
+    public int mCellId;
+    @JsonProperty("lac")
+    public int mLac;
+    @JsonProperty("mcc")
+    public int mMCC;
+    @JsonProperty("mnc")
+    public int mMNC;
+    @JsonProperty("time")
+    public Long mLastUpdateTime;
+    @JsonProperty("imei")
+    public String mImei;
+    @JsonProperty("imsi")
+    public String mImsi;
+    @JsonProperty("msisdn")
+    public String mMsisdn;
+
+    public Location(int mCellId, int mLac, int mMCC, int mMNC, Long mLastUpdateTime, String mImei, String mImsi, String mMsisdn) {
+        this.mCellId = mCellId;
+        this.mLac = mLac;
+        this.mMCC = mMCC;
+        this.mMNC = mMNC;
+        this.mLastUpdateTime = mLastUpdateTime;
+        this.mImei = mImei;
+        this.mImsi = mImsi;
+        this.mMsisdn = mMsisdn;
     }
 }

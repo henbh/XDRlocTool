@@ -46,6 +46,13 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>kafkaInterface</groupId>
+            <artifactId>kafkaInterface</artifactId>
+            <version>LATEST</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/KafkaGenericStream-1.0-SNAPSHOT-jar-with-dependencies.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.6.3</version>
