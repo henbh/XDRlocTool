@@ -1,4 +1,4 @@
-package watcher;
+package main;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import config.ConfigurationManager;
