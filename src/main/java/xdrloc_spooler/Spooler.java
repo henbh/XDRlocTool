@@ -1,4 +1,4 @@
-package main;
+package xdrloc_spooler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import config.ConfigurationManager;
@@ -27,7 +27,8 @@ public class Spooler {
             if (listOfFiles[i].isFile()) {
                 System.out.println("File Found ::::::::" + listOfFiles[i].getName());
                 readLocationsFile(listOfFiles[i].getPath());
-                Send();
+                send();
+                moveFile(listOfFiles[i].getPath());
             }
         }
     }
@@ -40,7 +41,7 @@ public class Spooler {
 
         for (String item : arrayList) {
             String[] locArr = item.split(",");
-            Location location = new Location(Integer.parseInt(locArr[1]),  Integer.parseInt(locArr[2]),Integer.parseInt(locArr[3]),Integer.parseInt(locArr[4]), Long.parseLong(locArr[0]),
+            Location location = new Location(Integer.parseInt(locArr[1]), Integer.parseInt(locArr[2]), Integer.parseInt(locArr[3]), Integer.parseInt(locArr[4]), Long.parseLong(locArr[0]),
                     locArr[5], locArr[6], locArr[7]);
             try {
                 locDrArr.add(mapper.writeValueAsString(location));
@@ -52,10 +53,23 @@ public class Spooler {
         return result;
     }
 
-    private void Send(){
+    private void send() {
         for (String item : locDrArr) {
             KafkaInterface.SendKafkaRecordToTopic(item, "enrich-1", ConfigurationManager.getInstance().kafkaHost);
         }
     }
 
+    private void moveFile(String file_path) {
+        try {
+            File file = new File(file_path);
+            String newFilePath = ConfigurationManager.getInstance().locationsFilesDir + ConfigurationManager.getInstance().doneFolderName +"\\"+ file.getName();
+            if (file.renameTo(new File(newFilePath))) {
+                System.out.println("File is moved successful!");
+            } else {
+                System.out.println("File is failed to move!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
