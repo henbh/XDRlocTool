@@ -19,6 +19,10 @@ public class Location {
     public String mImsi;
     @JsonProperty("msisdn")
     public String mMsisdn;
+    @JsonProperty("latitude")
+    public Float mLatitude;
+    @JsonProperty("longitude")
+    public Float mLongitude;
 
     public Location(int mCellId, int mLac, int mMCC, int mMNC, Long mLastUpdateTime, String mImei, String mImsi, String mMsisdn) {
         this.mCellId = mCellId;
