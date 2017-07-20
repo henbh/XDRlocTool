@@ -1,0 +1,16 @@
+{"namespace": "datamodule",
+ "type": "record",
+ "name": "Location",
+ "fields": [
+     {"name": "cellId", "type": "int"},
+     {"name": "lac", "type": "int"},
+     {"name": "mcc", "type": "int"},
+     {"name": "mnc", "type": "int"},
+     {"name": "lastUpdateTime", "type": "long"},
+     {"name": "imei", "type": "string"},
+     {"name": "imsi", "type": "string"},
+     {"name": "msisdn", "type": "string"},
+     {"name": "latitude", "type": "float"},
+     {"name": "longitude", "type": "float"}
+ ]
+}

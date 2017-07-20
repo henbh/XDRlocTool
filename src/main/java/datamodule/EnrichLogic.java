@@ -19,20 +19,20 @@ public class EnrichLogic {
             IgniteCache loc_cachae = IgniteManager.getInstance().getOrCreateCache(ConfigurationManager.getInstance().cellsCache);
 
             if (loc_cachae != null && location != null) {
-                if (loc_cachae.containsKey(location.mCellId)) {
-                    Tuple cell_location = (Tuple) loc_cachae.get(location.mCellId);
-                    location.mLatitude = Float.parseFloat(cell_location.latitude.toString());
-                    location.mLongitude = Float.parseFloat(cell_location.longitude.toString());
+                if (loc_cachae.containsKey(location.cellId)) {
+                    Tuple cell_location = (Tuple) loc_cachae.get(location.cellId);
+                    location.latitude = Float.parseFloat(cell_location.latitude.toString());
+                    location.longitude = Float.parseFloat(cell_location.longitude.toString());
                 } else if (ConfigurationManager.getInstance().isCellApiEnabled) {
                     Tuple loc_tuple = CellApiRest.getCellLocationRest(
                             ConfigurationManager.getInstance().apiCellToken,
-                            String.valueOf(location.mMCC),
-                            String.valueOf(location.mMNC),
-                            String.valueOf(location.mLac),
-                            String.valueOf(location.mCellId));
-                    loc_cachae.put(location.mCellId, loc_tuple);
-                    location.mLatitude = Float.parseFloat(loc_tuple.latitude.toString());
-                    location.mLongitude = Float.parseFloat(loc_tuple.longitude.toString());
+                            String.valueOf(location.mcc),
+                            String.valueOf(location.mnc),
+                            String.valueOf(location.lac),
+                            String.valueOf(location.cellId));
+                    loc_cachae.put(location.cellId, loc_tuple);
+                    location.latitude = Float.parseFloat(loc_tuple.latitude.toString());
+                    location.longitude = Float.parseFloat(loc_tuple.longitude.toString());
                 }
             }
         } catch (Exception e) {

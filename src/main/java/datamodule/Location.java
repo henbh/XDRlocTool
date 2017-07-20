@@ -4,34 +4,34 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Location {
     @JsonProperty("cell_id")
-    public int mCellId;
+    public int cellId;
     @JsonProperty("lac")
-    public int mLac;
+    public int lac;
     @JsonProperty("mcc")
-    public int mMCC;
+    public int mcc;
     @JsonProperty("mnc")
-    public int mMNC;
+    public int mnc;
     @JsonProperty("time")
-    public Long mLastUpdateTime;
+    public Long lastUpdateTime;
     @JsonProperty("imei")
-    public String mImei;
+    public String imei;
     @JsonProperty("imsi")
-    public String mImsi;
+    public String imsi;
     @JsonProperty("msisdn")
-    public String mMsisdn;
+    public String msisdn;
     @JsonProperty("latitude")
-    public Float mLatitude;
+    public Float latitude;
     @JsonProperty("longitude")
-    public Float mLongitude;
+    public Float longitude;
 
-    public Location(int mCellId, int mLac, int mMCC, int mMNC, Long mLastUpdateTime, String mImei, String mImsi, String mMsisdn) {
-        this.mCellId = mCellId;
-        this.mLac = mLac;
-        this.mMCC = mMCC;
-        this.mMNC = mMNC;
-        this.mLastUpdateTime = mLastUpdateTime;
-        this.mImei = mImei;
-        this.mImsi = mImsi;
-        this.mMsisdn = mMsisdn;
+    public Location(int cellId, int lac, int mcc, int mnc, Long lastUpdateTime, String imei, String imsi, String msisdn) {
+        this.cellId = cellId;
+        this.lac = lac;
+        this.mcc = mcc;
+        this.mnc = mnc;
+        this.lastUpdateTime = lastUpdateTime;
+        this.imei = imei;
+        this.imsi = imsi;
+        this.msisdn = msisdn;
     }
 }
