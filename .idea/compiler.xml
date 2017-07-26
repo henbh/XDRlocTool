@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="XDRloc" />
+        <module name="XDRlocConvertToCSV" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="XDRloc" target="1.8" />
+      <module name="XDRlocConvertToCSV" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

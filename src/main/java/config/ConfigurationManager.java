@@ -8,13 +8,7 @@ public class ConfigurationManager {
     public String locationsFilesDir;
     public String filesFolderName;
     public String doneFolderName;
-    public String cassandraAddress;
-    public String kafkaAddress;
-    public String zookeeperAddress;
-    public String igniteAddress;
-    public String cellsCache;
-    public boolean isCellApiEnabled;
-    public String apiCellToken;
+    public String csvFolderName;
 
 
     private static ConfigurationManager instance = null;
@@ -60,15 +54,9 @@ public class ConfigurationManager {
 
             // set properties values
             locationsFilesDir = prop.getProperty("locations_files_dir");
-            cassandraAddress = prop.getProperty("cassandra_address");
             filesFolderName = prop.getProperty("files_folder_name");
             doneFolderName = prop.getProperty("done_folder_name");
-            kafkaAddress = prop.getProperty("kafka_address");
-            zookeeperAddress = prop.getProperty("zookeeper_address");
-            igniteAddress = prop.getProperty("ignite_address");
-            cellsCache = prop.getProperty("cells_cache");
-            isCellApiEnabled = Boolean.parseBoolean(prop.getProperty("is_cell_api_enabled"));
-            apiCellToken = prop.getProperty("api_cell_token");
+            csvFolderName = prop.getProperty("csv_folder_name");
 
             fis.close();
             System.out.println("loaded " + propFileName);

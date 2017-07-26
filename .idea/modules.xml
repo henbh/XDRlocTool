@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/XDRloc.iml" filepath="$PROJECT_DIR$/XDRloc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/XDRlocConvertToCSV.iml" filepath="$PROJECT_DIR$/XDRlocConvertToCSV.iml" />
     </modules>
   </component>
 </project>
