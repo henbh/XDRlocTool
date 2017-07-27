@@ -1,6 +1,6 @@
-{"namespace": "datamodule",
+{"namespace": "xdrloc",
  "type": "record",
- "name": "Location",
+ "name": "xdrloc_location",
  "fields": [
      {"name": "cellId", "type": "int"},
      {"name": "lac", "type": "int"},
@@ -9,8 +9,6 @@
      {"name": "lastUpdateTime", "type": "long"},
      {"name": "imei", "type": "string"},
      {"name": "imsi", "type": "string"},
-     {"name": "msisdn", "type": "string"},
-     {"name": "latitude", "type": "float"},
-     {"name": "longitude", "type": "float"}
+     {"name": "msisdn", "type": "string"}
  ]
 }
